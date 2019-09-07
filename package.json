@@ -15,5 +15,14 @@
   "bugs": {
     "url": "https://github.com/Ztumpie905509/discord-music-player/issues"
   },
-  "homepage": "https://github.com/Ztumpie905509/discord-music-player#readme"
+  "homepage": "https://github.com/Ztumpie905509/discord-music-player#readme",
+  "dependencies": {
+    "@types/lodash": "^4.14.138",
+    "simple-youtube-api": "^5.2.1",
+    "ts-node": "^8.3.0",
+    "ytdl-core": "^0.29.6"
+  },
+  "devDependencies": {
+    "@types/node": "^12.7.4"
+  }
 }
