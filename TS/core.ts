@@ -178,7 +178,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                 serverQueue.songs.shift();
                 this.playMusic(guild, serverQueue.songs[0]);
             } else if (serverQueue.repeat === true) {
-                console.log("Song ended, but repeated")
+                console.log("Song ended, but repeated") 
                 this.playMusic(guild, serverQueue.songs[0]);
             } else {
                 if (reason === 'Stream is not generating quickly enough.') console.log('Song ended.')
