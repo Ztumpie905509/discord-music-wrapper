@@ -6,11 +6,10 @@
         "newLine": "CRLF",
         "removeComments": true,
         "preserveConstEnums": true,
-        "outDir": "src/JS/core",
         "target":"es6"
     },
     "include": [
-        "src/TS/**/*"
+        "**/*"
     ],
     "exclude": [
         "node_modules"
