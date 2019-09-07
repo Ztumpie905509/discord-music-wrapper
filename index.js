@@ -1,1 +1,1 @@
-module.exports = { musicClient: require("./core.js") }
+module.exports = require("./core.js")
