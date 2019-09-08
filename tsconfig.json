@@ -5,7 +5,7 @@
         "module": "commonJS",
         "newLine": "CRLF",
         "removeComments": true,
-        "outDir": "../",
+        "outDir": "./",
         "preserveConstEnums": true,
         "target":"es6"
     },
