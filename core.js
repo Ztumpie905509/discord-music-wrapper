@@ -41,14 +41,14 @@ class musicClient {
                 let video;
                 for (video of Object.values(videos)) {
                     const video2 = yield youtube.getVideoByID(video.id);
-                    yield this.handleVideo(video2, msg, voiceChannel, true);
+                    yield functions.handleVideo(video2, msg, voiceChannel, true);
                 }
                 return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m) => {
                     return m.delete(10000);
                 });
             } else {
                 try {
-                    video = yield youtube.getVideo(url);
+                    var video = yield youtube.getVideo(url);
                 } catch (error) {
                     try {
                         var videos = yield youtube.searchVideos(searchString, 10);
@@ -71,10 +71,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                         } catch (err) {
                             console.error(err);
                             return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
-                                return m.delete(10000).catch((e) => {
-                                    if (e)
-                                        console.log("Deleting a deleted message from #choose-song-area");
-                                });
+                                return m.delete(10000);
                             });
                         }
                         const videoIndex = parseInt(response.first().content);
@@ -86,7 +83,70 @@ Please provide a value to select one of the search results ranging from 1-10.
                         });
                     }
                 }
-                return this.handleVideo(video, msg, voiceChannel);
+                return functions.handleVideo(video, msg, voiceChannel);
+            }
+        });
+    }
+    playTop(msg, searchString) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var youtube = this.youtube;
+            const url = searchString ? searchString.replace(/<(.+)>/g, '$1') : '';
+            const voiceChannel = msg.member.voiceChannel;
+            if (!voiceChannel)
+                return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!').then((m) => {
+                    return m.delete(10000);
+                });
+            const permissions = voiceChannel.permissionsFor(msg.client.user);
+            if (!permissions.has('CONNECT'))
+                return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!').then((m) => {
+                    return m.delete(10000);
+                });
+            if (!permissions.has('SPEAK'))
+                return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m) => {
+                    return m.delete(10000);
+                });
+            if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+                return msg.channel.send("You cannot use +play-top with a playlist.").then((m) => {
+                    return m.delete(10000);
+                });
+            } else {
+                try {
+                    var video = yield youtube.getVideo(url);
+                } catch (error) {
+                    try {
+                        var videos = yield youtube.searchVideos(searchString, 10);
+                        let index = 0;
+                        msg.channel.send(`
+__**Song selection:**__
+
+${videos.map((video2) => { return `**${++index} -** ${video2.title}`; }).join('\n')}
+
+Please provide a value to select one of the search results ranging from 1-10.
+					`).then((m) => {
+                            return m.delete(10000);
+                        });
+                        try {
+                            var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
+                                errors    : ['time'],
+                                maxMatches: 1,
+                                time      : 10000
+                            });
+                        } catch (err) {
+                            console.error(err);
+                            return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
+                                return m.delete(10000);
+                            });
+                        }
+                        const videoIndex = parseInt(response.first().content);
+                        var video = yield youtube.getVideoByID(videos[videoIndex - 1].id);
+                    } catch (err) {
+                        console.error(err);
+                        return msg.channel.send('🆘 I could not obtain any search results.').then((m) => {
+                            return m.delete(10000);
+                        });
+                    }
+                }
+                return functions.handleVideo(video, msg, voiceChannel, false, true);
             }
         });
     }
@@ -109,6 +169,106 @@ Please provide a value to select one of the search results ranging from 1-10.
             return msg.channel.send('There is nothing playing that I could skip for you.').then((m) => { return m.delete(10000); });
         serverQueue.connection.dispatcher.end("Song got skipped.");
     }
+    showQueue(msg) {
+        const queue = this.queue;
+        const serverQueue = queue.get(msg.guild.id);
+        if (!serverQueue)
+            return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000); });
+        var index = 0;
+        var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})`; });
+        functions.addMusicQueueField(msg, songArray).then((results) => {
+            return __awaiter(this, void 0, void 0, function* () {
+                for (let i = 0; i < results.length; i++) {
+                    yield new Promise((r) => { return setTimeout(r, 500); });
+                    const element = results[i];
+                    msg.channel.send(element).then((m) => { return m.delete(30000); });
+                }
+            }) 
+        });
+    }
+    run(msg, number) {
+        const queue = this.queue;
+        const serverQueue = queue.get(msg.guild.id);
+        if (!serverQueue)
+            return msg.channel.send('There is nothing playing.').then((m) => {
+                return m.delete(10000).catch((e) => {
+                    if (e)
+                        console.log("Deleting a deleted message from #choose-song-area"); 
+                }); 
+            });
+        var deleteIndex = number - 1;
+        if (deleteIndex === 0)
+            return msg.channel.send(`You cannot remove the song that is now playing. To remove it, use skip command instead.`).then((m) => { return m.delete(10000); });
+        var removed = serverQueue.songs.splice(deleteIndex, 1);
+        msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m) => {
+            return m.delete(10000).catch((e) => {
+                if (e)
+                    console.log("Deleting a deleted message from #choose-song-area"); 
+            }); 
+        });
+        var index = 0;
+        var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})`; });
+        functions.addMusicQueueField(msg, songArray).then((results) => {
+            return __awaiter(this, void 0, void 0, function* () {
+                for (let i = 0; i < results.length; i++) {
+                    yield new Promise((r) => { return setTimeout(r, 500); });
+                    const element = results[i];
+                    msg.channel.send(element).then((m) => { return m.delete(30000); });
+                }
+            }) 
+        });
+    }
+}
+const functions = {
+    addMusicQueueField(msg, content) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { Discord, queue } = require("../../core/exports");
+            const videoTotalLength = require("./videoTotalLength");
+            const serverQueue = queue.get(msg.guild.id);
+            var toSendEmbed = [];
+            var color = Math.floor(Math.random() * 16777214) + 1;
+            let i = 0;
+            var totalLength = videoTotalLength(content);
+            while (i < content.length) {
+                var embed = new Discord.RichEmbed();
+                let index = 0;
+                while (i < content.length && index < 25) {
+                    var list = [];
+                    const element0 = content[i];
+                    index++;
+                    i++;
+                    const element1 = content[i];
+                    index++;
+                    i++;
+                    const element2 = content[i];
+                    index++;
+                    i++;
+                    const element3 = content[i];
+                    index++;
+                    i++;
+                    const element4 = content[i];
+                    index++;
+                    i++;
+                    list.push(element0);
+                    element1 ? list.push(element1) : console.log("Empty element");
+                    element1 ? list.push(element2) : console.log("Empty element");
+                    element1 ? list.push(element3) : console.log("Empty element");
+                    element1 ? list.push(element4) : console.log("Empty element");
+                    if (i < 25) {
+                        embed.setTitle(`Song queue for ${msg.guild.name}`);
+                        embed.setDescription(`There are ${serverQueue.songs.length} songs in total.\nThe play back will ends in **${totalLength.hours}:${totalLength.minutes}:${totalLength.seconds}**.`);
+                        embed.setAuthor(msg.author.username, msg.author.avatarURL);
+                    }
+                    embed.setTimestamp();
+                    embed.setFooter(`Now playing : ${serverQueue.songs[0].title}`);
+                    embed.addField("** **", list.join("\n"));
+                    embed.setColor(color);
+                }
+                toSendEmbed.push(embed);
+            }
+            return toSendEmbed;
+        });
+    },
     handleVideo(video, msg, voiceChannel, playlist = false, top = false) {
         return __awaiter(this, void 0, void 0, function* () {
             const serverQueue = this.queue.get(msg.guild.id);
@@ -170,7 +330,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             }
             return undefined;
         });
-    }
+    },
     playMusic(guild, song) {
         const serverQueue = this.queue.get(guild.id);
         try {
@@ -210,5 +370,5 @@ Please provide a value to select one of the search results ranging from 1-10.
             return m.delete(10000);
         });
     }
-}
+};
 module.exports = musicClient;
