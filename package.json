@@ -1,6 +1,6 @@
 {
   "name": "discord-music-wrapper",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "A discord.js bot music functions warper.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,6 @@
   "dependencies": {
     "@types/lodash": "^4.14.138",
     "discord.js": "^11.5.1",
-    "discord.js-commando": "^0.10.0",
     "simple-youtube-api": "^5.2.1",
     "ts-node": "^8.3.0",
     "ytdl-core": "^0.29.6"
