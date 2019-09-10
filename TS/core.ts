@@ -9,7 +9,7 @@ interface musicClient {
 }
 
 class musicClient {
-    constructor(GoogleApiKey: string) {
+    public constructor(GoogleApiKey: string) {
         this.google_api_key = GoogleApiKey
         this.youtube = new YouTube(this.google_api_key)
         this.queue = new Map()
