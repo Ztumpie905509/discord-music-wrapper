@@ -6,7 +6,7 @@ export interface musicClient {
     google_api_key: string
     youtube: any
     queueList: any
-    settings?: musicClientOptions
+    settings: musicClientOptions
 }
 
 export interface musicClientOptions {
@@ -18,7 +18,7 @@ export interface musicClientOptions {
 export class musicClient {
     /**
      * Options for the music client
-     * @typedef {musicClientOptions} musicClientOptions
+     * @typedef {ClientOptions} musicClientOptions
      * @property {boolean} [earProtections=true] - Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] - Whether to loop the queue by default. 
      * @property {number} [volume=20] - The default client volume to be used.
@@ -33,6 +33,7 @@ export class musicClient {
         this.google_api_key = YouTubeApiKey
         this.youtube = new YouTube(this.google_api_key)
         this.queueList = new Map()
+        this.settings = {}
         if (options.volume) this.settings.volume = options.volume
         else this.settings.volume = 20
         if (options.earProtections) {

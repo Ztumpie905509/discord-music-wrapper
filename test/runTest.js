@@ -1,6 +1,8 @@
 var musicClient = require("../core")
 const musicPlayer = new musicClient("This-is-not-an-api-key")
+console.log(musicClient)
 console.log(musicPlayer.youtube)
 console.log(musicPlayer.google_api_key)
 console.log(musicPlayer.queueList)
+console.log(musicPlayer.settings)
 console.log("Test passed !")
