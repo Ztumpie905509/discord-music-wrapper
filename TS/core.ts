@@ -244,7 +244,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL)
         return msg.channel.send(embed).then((m: Message) => { return m.delete(10000) })
     }
-    /**
+    /** 
      * Removes a certain song in the music queue.
      * 
      * You cannot remove the first song in the queue with this method.

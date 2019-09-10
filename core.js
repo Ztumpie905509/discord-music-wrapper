@@ -13,6 +13,10 @@ const discord_js_1 = require("discord.js");
 const ytdl = require("ytdl-core");
 var YouTube = require("simple-youtube-api");
 class musicClient {
+    /**
+     * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
+     * @param {musicClientOptions} options The music client options avalible to configure.
+     */
     constructor(YouTubeApiKey, options) {
         if (typeof YouTubeApiKey !== "string")
             throw new Error("The YouTube Api Key provided is not a string.");
@@ -32,6 +36,13 @@ class musicClient {
         else
             this.settings.loop = false;
     }
+    /**
+     * Play the music requested in a voice channel with the command user.
+     *
+     * If there is a queue for playing, the searched video will be queued instead.
+     * @param msg The message object that triggers the command.
+     * @param {string} searchQuery Search string for the video/YouTube video URL/YouTube playlist URL
+     */
     play(msg, searchQuery) {
         return __awaiter(this, void 0, void 0, function* () {
             if (typeof searchQuery !== "string")
@@ -57,8 +68,8 @@ class musicClient {
                 const videos = yield playlist.getVideos();
                 let video;
                 for (video of Object.values(videos)) {
-                    const video2 = yield youtube.getVideoByID(video.id);
-                    yield musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true);
+                    const video2 = yield youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
+                    yield musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true); // eslint-disable-line no-await-in-loop
                 }
                 return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m) => {
                     return m.delete(10000);
@@ -79,6 +90,7 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000);
                         });
+                        // eslint-disable-next-line max-depth
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
                                 errors    : ['time'],
@@ -104,6 +116,15 @@ Please provide a value to select one of the search results ranging from 1-10.
             }
         });
     }
+    /**
+     * Play the music requested in a voice channel with the command user.
+     *
+     * If there is a queue for playing, the searched video will be queued on top of others instead.
+     *
+     * The bot will return the command if a playlist URL is used.
+     * @param msg The message object that triggers the command.
+     * @param {string} searchQuery Search string for the video/YouTube video URL
+     */
     playTop(msg, searchQuery) {
         return __awaiter(this, void 0, void 0, function* () {
             var youtube = this.youtube;
@@ -142,6 +163,7 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000);
                         });
+                        // eslint-disable-next-line max-depth
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
                                 errors    : ['time'],
@@ -167,6 +189,12 @@ Please provide a value to select one of the search results ranging from 1-10.
             }
         });
     }
+    /**
+     * Stops music and remove the music queue.
+     *
+     * This will also cause the bot to leave the voice channel.
+     * @param msg The message object that triggers the command.
+     */
     stop(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -177,6 +205,13 @@ Please provide a value to select one of the search results ranging from 1-10.
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end("Bot got stopped.");
     }
+    /**
+     * Skips the music which the bot is now playing.
+     *
+     * If this is the last song in the queue,
+     * this will also cause the bot to leave the voice channel.
+     * @param msg The message object that triggers the command.
+     */
     skip(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -186,6 +221,10 @@ Please provide a value to select one of the search results ranging from 1-10.
             return msg.channel.send('There is nothing playing that I could skip for you.').then((m) => { return m.delete(10000); });
         serverQueue.connection.dispatcher.end("Song got skipped.");
     }
+    /**
+     * Displays the music queue.
+     * @param msg The message object that triggers the command.
+     */
     showQueue(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -203,6 +242,10 @@ Please provide a value to select one of the search results ranging from 1-10.
             }) 
         });
     }
+    /**
+     * Displays the music now playing.
+     * @param msg The message object that triggers the command.
+     */
     nowPlaying(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -216,6 +259,22 @@ Please provide a value to select one of the search results ranging from 1-10.
             .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL);
         return msg.channel.send(embed).then((m) => { return m.delete(10000); });
     }
+    /**
+     * Removes a certain song in the music queue.
+     *
+     * You cannot remove the first song in the queue with this method.
+     * @param msg The message object that triggers the command.
+     * @param {number} queueIndex The index for the song in the queue.
+     * @example
+     * // Song queue :
+     * // 1. National Anthem of USSR,
+     * // 2. Do you hear the people sing?
+     *
+     * //I wanted to remove the song "Do you hear the people sing?".
+     * musicClient.remove(2)
+     * // New song queue :
+     * // 1. National Anthem of USSR
+     */
     remove(msg, queueIndex) {
         if (typeof queueIndex !== "number")
             return console.log("The query provided is not a number.");
@@ -240,6 +299,12 @@ Please provide a value to select one of the search results ranging from 1-10.
             }) 
         });
     }
+    /**
+     * Repeats the first song in queue.
+     *
+     * Looping the song queue will be disabled upon usage of this command.
+     * @param msg The message object that triggers the command.
+     */
     repeat(msg) {
         const serverQueue = this.queueList.get(msg.guild.id);
         if (!serverQueue)
@@ -256,6 +321,12 @@ Please provide a value to select one of the search results ranging from 1-10.
             msg.channel.send("The frist song in the queue is no longer being repeated.").then((m) => { return m.delete(10000); });
         }
     }
+    /**
+     * Loops the whole song queue.
+     *
+     * Repeat a single song will be disabled upon usage of this command.
+     * @param msg The message object that triggers the command.
+     */
     loop(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -273,6 +344,10 @@ Please provide a value to select one of the search results ranging from 1-10.
             msg.channel.send("The song queue is no longer being looped.").then((m) => { return m.delete(10000); });
         }
     }
+    /**
+     * Shuffles the whole music queue.
+     * @param msg The message object that triggers the command.
+     */
     shuffle(msg) {
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
@@ -307,6 +382,18 @@ Please provide a value to select one of the search results ranging from 1-10.
             }); 
         });
     }
+    /**
+     * Changes the volume of the music.
+     *
+     * The default volume is 20/100, which is safe to turn the music bot volume in discord to 100%.
+     * Tuning the volume higher than 50 is not recommended.
+     *
+     * Any negative numbers in the volume will only cause the bot to display current volume.
+     *
+     * This will NOT cause any performance issues as stated from some music bot developers.
+     * @param msg The message object that triggers the command.
+     * @param {number} volume A number to change the volume based on 100.
+     */
     volume(msg, volume = -1) {
         if (typeof volume !== "number")
             return console.log("The volume provided is not a number");
