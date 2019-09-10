@@ -1,5 +1,5 @@
 var musicClient = require("../core")
-// Do NOT ever use this setting
+// Do NOT ever use this settings
 const musicPlayer = new musicClient("This-is-not-an-api-key", {
     earProtections: false,
     loop          : true,
