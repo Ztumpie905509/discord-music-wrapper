@@ -15,7 +15,7 @@ class musicClient {
     constructor(GoogleApiKey) {
         this.google_api_key = GoogleApiKey;
         this.youtube = new YouTube(this.google_api_key);
-        this.queue = new Map();
+        this.queueList = new Map();
     }
     play(msg, searchString) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -151,7 +151,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         });
     }
     stop(msg) {
-        const queue = this.queue;
+        const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel)
             return msg.channel.send('You are not in a voice channel!').then((m) => { return m.delete(10000); });
@@ -161,7 +161,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         serverQueue.connection.dispatcher.end("Bot got stopped.");
     }
     skip(msg) {
-        const queue = this.queue;
+        const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel)
             return msg.channel.send('You are not in a voice channel!').then((m) => { return m.delete(10000); });
@@ -170,7 +170,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         serverQueue.connection.dispatcher.end("Song got skipped.");
     }
     showQueue(msg) {
-        const queue = this.queue;
+        const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000); });
@@ -187,7 +187,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         });
     }
     remove(msg, number) {
-        const queue = this.queue;
+        const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {

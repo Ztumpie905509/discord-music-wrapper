@@ -5,14 +5,14 @@ var YouTube = require("simple-youtube-api")
 interface musicClient {
     google_api_key: string
     youtube: any
-    queue: any
+    queueList: any
 }
 
 class musicClient {
     public constructor(GoogleApiKey: string) {
         this.google_api_key = GoogleApiKey
         this.youtube = new YouTube(this.google_api_key)
-        this.queue = new Map()
+        this.queueList = new Map()
     }
     public async play(msg: Message, searchString: string) {
         const youtube = this.youtube
@@ -145,7 +145,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         }
     }
     public stop(msg: Message) {
-        const queue = this.queue
+        const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
         if (!serverQueue) return msg.channel.send('There is nothing playing that I could stop for you.').then((m: Message) => { return m.delete(10000) })
@@ -153,14 +153,14 @@ Please provide a value to select one of the search results ranging from 1-10.
         serverQueue.connection.dispatcher.end("Bot got stopped.")
     }
     public skip(msg: Message) {
-        const queue = this.queue
+        const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
         if (!serverQueue) return msg.channel.send('There is nothing playing that I could skip for you.').then((m: Message) => { return m.delete(10000) })
         serverQueue.connection.dispatcher.end("Song got skipped.")
     }
     public showQueue(msg: Message) {
-        const queue = this.queue
+        const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
         var index = 0
@@ -174,7 +174,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         })
     }
     public remove(msg, number) {
-        const queue = this.queue
+        const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
         var deleteIndex = number - 1
