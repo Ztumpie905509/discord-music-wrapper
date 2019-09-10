@@ -4,7 +4,7 @@
   "description": "A discord.js bot music functions warper.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\""
+    "test": "node ./test/runTest.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,8 @@
   },
   "devDependencies": {
     "@types/node": "^12.7.4"
+  },
+  "directories": {
+    "test": "test"
   }
 }
