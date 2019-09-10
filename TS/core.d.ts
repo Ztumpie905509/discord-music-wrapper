@@ -70,7 +70,7 @@ export declare class musicClient {
      * // 1. National Anthem of USSR,
      * // 2. Do you hear the people sing?
      *
-     * //I wanted to remove the song "Do you hear the people sing?".
+     * // I wanted to remove the song "Do you hear the people sing?".
      * musicClient.remove(2)
      * // New song queue :
      * // 1. National Anthem of USSR

@@ -68,8 +68,8 @@ class musicClient {
                 const videos = yield playlist.getVideos();
                 let video;
                 for (video of Object.values(videos)) {
-                    const video2 = yield youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-                    yield musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true); // eslint-disable-line no-await-in-loop
+                    const video2 = yield youtube.getVideoByID(video.id);
+                    yield musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true);
                 }
                 return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m) => {
                     return m.delete(10000);
@@ -90,7 +90,6 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000);
                         });
-                        // eslint-disable-next-line max-depth
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
                                 errors    : ['time'],
@@ -163,7 +162,6 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000);
                         });
-                        // eslint-disable-next-line max-depth
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
                                 errors    : ['time'],
@@ -270,7 +268,7 @@ Please provide a value to select one of the search results ranging from 1-10.
      * // 1. National Anthem of USSR,
      * // 2. Do you hear the people sing?
      *
-     * //I wanted to remove the song "Do you hear the people sing?".
+     * // I wanted to remove the song "Do you hear the people sing?".
      * musicClient.remove(2)
      * // New song queue :
      * // 1. National Anthem of USSR

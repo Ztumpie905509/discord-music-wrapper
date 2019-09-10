@@ -64,8 +64,8 @@ export class musicClient {
             const videos = await playlist.getVideos();
             let video: any
             for (video of Object.values(videos)) {
-                const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-                await musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true); // eslint-disable-line no-await-in-loop
+                const video2 = await youtube.getVideoByID(video.id)
+                await musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true);
             }
             return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m: Message) => {
                 return m.delete(10000)
@@ -86,7 +86,6 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m: Message) => {
                         return m.delete(10000)
                     })
-                    // eslint-disable-next-line max-depth
                     try {
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
                             errors: ['time'],
@@ -157,7 +156,6 @@ Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m: Message) => {
                         return m.delete(10000)
                     })
-                    // eslint-disable-next-line max-depth
                     try {
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
                             errors: ['time'],
@@ -255,7 +253,7 @@ Please provide a value to select one of the search results ranging from 1-10.
      * // 1. National Anthem of USSR,
      * // 2. Do you hear the people sing?
      * 
-     * //I wanted to remove the song "Do you hear the people sing?".
+     * // I wanted to remove the song "Do you hear the people sing?".
      * musicClient.remove(2)
      * // New song queue :
      * // 1. National Anthem of USSR
@@ -333,7 +331,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         musicFunctions.shuffleArray(serverQueue.songs)
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
-        musicFunctions.addMusicQueueField(msg, songArray, queue).then(async(results) => {
+        musicFunctions.addMusicQueueField(msg, songArray, queue).then(async (results) => {
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
@@ -521,7 +519,7 @@ const musicFunctions = {
         temp = []
         return array;
     }
-    
+
 }
 
 module.exports = musicClient
