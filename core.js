@@ -414,6 +414,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         return msg.channel.send(`I set the volume to: **${volume}**`).then((m) => { return m.delete(10000); });
     }
 }
+exports.musicClient = musicClient;
 const musicFunctions = {
     addMusicQueueField(msg, content, queue) {
         return __awaiter(this, void 0, void 0, function* () {

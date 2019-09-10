@@ -2,20 +2,20 @@ import { Message, RichEmbed, VoiceChannel } from "discord.js"
 import * as ytdl from "ytdl-core"
 var YouTube = require("simple-youtube-api")
 
-interface musicClient {
+export interface musicClient {
     google_api_key: string
     youtube: any
     queueList: any
     settings?: musicClientOptions
 }
 
-interface musicClientOptions {
+export interface musicClientOptions {
     earProtections?: boolean
     loop?: boolean
     volume?: number
 }
 
-class musicClient {
+export class musicClient {
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
      * @param {musicClientOptions} options The music client options avalible to configure.

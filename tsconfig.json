@@ -7,7 +7,9 @@
         "removeComments": false,
         "outDir": "./",
         "preserveConstEnums": true,
-        "target":"es6"
+        "target":"es6",
+        "declaration": true,
+        "declarationDir": "./ts"
     },
     "include": [
         "**/*"
