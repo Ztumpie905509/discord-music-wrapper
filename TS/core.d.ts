@@ -106,7 +106,7 @@ export declare class musicClient {
      * Changes the volume of the music.
      *
      * The default volume is 20/100, which is safe to turn the music bot volume in discord to 100%.
-     * Tuning the volume higher than 50 is not recommended.
+     * Tuning up the volume higher than 50 is not recommended.
      *
      * Any negative numbers in the volume will only cause the bot to display current volume.
      *
