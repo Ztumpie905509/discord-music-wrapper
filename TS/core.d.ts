@@ -20,7 +20,7 @@ export declare class musicClient {
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
-     * @param {musicClientOptions} options The music client options avalible to configure.
+     * @param {musicClientOptions} [options] The music client options avalible to configure.
      */
     constructor(YouTubeApiKey: string, options?: musicClientOptions);
     /**

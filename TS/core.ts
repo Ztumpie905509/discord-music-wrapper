@@ -23,9 +23,10 @@ export class musicClient {
      * @property {boolean} [loop=false] - Whether to loop the queue by default. 
      * @property {number} [volume=20] - The default client volume to be used.
      */
+
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
-     * @param {musicClientOptions} options The music client options avalible to configure.
+     * @param {musicClientOptions} [options] The music client options avalible to configure.
      */
     public constructor(YouTubeApiKey: string, options: musicClientOptions = {}) {
         if (typeof YouTubeApiKey !== "string") throw new Error("The YouTube Api Key provided is not a string.")
