@@ -1,5 +1,5 @@
 name: GitHub Action for npm
-uses: actions/npm@1.0.0
+uses: actions/npm@5.0.0
 
 on:
   pull_request:
