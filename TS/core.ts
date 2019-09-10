@@ -14,7 +14,7 @@ class musicClient {
         this.youtube = new YouTube(this.google_api_key)
         this.queue = new Map()
     }
-    async play(msg: Message, searchString: string) {
+    public async play(msg: Message, searchString: string) {
         const youtube = this.youtube
         const url = searchString ? searchString.replace(/<(.+)>/g, '$1') : '';
         const voiceChannel = msg.member.voiceChannel;
@@ -36,7 +36,7 @@ class musicClient {
             let video: any
             for (video of Object.values(videos)) {
                 const video2 = await youtube.getVideoByID(video.id); // eslint-disable-line no-await-in-loop
-                await functions.handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
+                await this.handleVideo(video2, msg, voiceChannel, true); // eslint-disable-line no-await-in-loop
             }
             return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m: Message) => {
                 return m.delete(10000)
@@ -79,10 +79,10 @@ Please provide a value to select one of the search results ranging from 1-10.
                     })
                 }
             }
-            return functions.handleVideo(video, msg, voiceChannel)
+            return this.handleVideo(video, msg, voiceChannel)
         }
     }
-    async playTop(msg: Message, searchString: string) {
+    public async playTop(msg: Message, searchString: string) {
         var youtube = this.youtube
         const url = searchString ? searchString.replace(/<(.+)>/g, '$1') : '';
         const voiceChannel = msg.member.voiceChannel;
@@ -141,10 +141,10 @@ Please provide a value to select one of the search results ranging from 1-10.
                     })
                 }
             }
-            return functions.handleVideo(video, msg, voiceChannel, false, true)
+            return this.handleVideo(video, msg, voiceChannel, false, true)
         }
     }
-    stop(msg: Message) {
+    public stop(msg: Message) {
         const queue = this.queue
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
@@ -152,20 +152,20 @@ Please provide a value to select one of the search results ranging from 1-10.
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end("Bot got stopped.")
     }
-    skip(msg: Message) {
+    public skip(msg: Message) {
         const queue = this.queue
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
         if (!serverQueue) return msg.channel.send('There is nothing playing that I could skip for you.').then((m: Message) => { return m.delete(10000) })
         serverQueue.connection.dispatcher.end("Song got skipped.")
     }
-    showQueue(msg: Message) {
+    public showQueue(msg: Message) {
         const queue = this.queue
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
-        functions.addMusicQueueField(msg, songArray).then(async (results) => {
+        this.addMusicQueueField(msg, songArray).then(async (results) => {
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
@@ -173,7 +173,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             }
         })
     }
-    run(msg, number) {
+    public remove(msg, number) {
         const queue = this.queue
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
@@ -183,7 +183,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m) => { return m.delete(10000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
-        functions.addMusicQueueField(msg, songArray).then(async (results) => {
+        this.addMusicQueueField(msg, songArray).then(async (results) => {
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
@@ -191,10 +191,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             }
         })
     }
-}
-
-const functions = {
-    async addMusicQueueField(msg, content) {
+    private async addMusicQueueField(msg, content) {
         const { Discord, queue } = require("../../core/exports")
         const videoTotalLength = require("./videoTotalLength")
         const serverQueue = queue.get(msg.guild.id);
@@ -240,8 +237,8 @@ const functions = {
             toSendEmbed.push(embed)
         }
         return toSendEmbed
-    },
-    async handleVideo(video, msg, voiceChannel, playlist = false, top = false) {
+    }
+    private async handleVideo(video, msg, voiceChannel, playlist = false, top = false) {
         const serverQueue = this.queue.get(msg.guild.id);
         const song = {
             guild: msg.guild.name,
@@ -296,8 +293,8 @@ const functions = {
             }
         }
         return undefined;
-    },
-    playMusic(guild, song) {
+    }
+    private playMusic(guild, song) {
         const serverQueue = this.queue.get(guild.id);
         try {
             if (!song) {
