@@ -15,10 +15,10 @@ var YouTube = require("simple-youtube-api");
 class musicClient {
     /**
      * Options for the music client
-     * @typedef {ClientOptions} musicClientOptions
-     * @property {boolean} [earProtections=true] - Whether to protect ears from high volume of music.
-     * @property {boolean} [loop=false] - Whether to loop the queue by default.
-     * @property {number} [volume=20] - The default client volume to be used.
+     * @typedef {object} musicClientOptions
+     * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
+     * @property {boolean} [loop=false] Whether to loop the queue by default.
+     * @property {number} [volume=20] The default client volume to be used.
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.

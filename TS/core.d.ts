@@ -3,26 +3,26 @@ export interface musicClient {
     google_api_key: string;
     youtube: any;
     queueList: any;
-    settings: musicClientOptions;
+    settings: ClientOptions;
 }
-export interface musicClientOptions {
+export declare type ClientOptions = {
     earProtections?: boolean;
     loop?: boolean;
     volume?: number;
-}
+};
 export declare class musicClient {
     /**
      * Options for the music client
-     * @typedef {ClientOptions} musicClientOptions
-     * @property {boolean} [earProtections=true] - Whether to protect ears from high volume of music.
-     * @property {boolean} [loop=false] - Whether to loop the queue by default.
-     * @property {number} [volume=20] - The default client volume to be used.
+     * @typedef {object} musicClientOptions
+     * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
+     * @property {boolean} [loop=false] Whether to loop the queue by default.
+     * @property {number} [volume=20] The default client volume to be used.
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
      * @param {musicClientOptions} [options] The music client options avalible to configure.
      */
-    constructor(YouTubeApiKey: string, options?: musicClientOptions);
+    constructor(YouTubeApiKey: string, options?: ClientOptions);
     /**
      * Play the music requested in a voice channel with the command user.
      *

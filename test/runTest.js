@@ -1,5 +1,10 @@
 var musicClient = require("../core")
-const musicPlayer = new musicClient("This-is-not-an-api-key")
+// Do NOT ever use this setting
+const musicPlayer = new musicClient("This-is-not-an-api-key", {
+    earProtections: false,
+    loop          : true,
+    volume        : 100
+})
 console.log(musicClient)
 console.log(musicPlayer.youtube)
 console.log(musicPlayer.google_api_key)
