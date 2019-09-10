@@ -14,10 +14,17 @@ const ytdl = require("ytdl-core");
 var YouTube = require("simple-youtube-api");
 class musicClient {
     /**
+     * Options for the music client
+     * @typedef {musicClientOptions} musicClientOptions
+     * @property {boolean} [earProtections=true] - Whether to protect ears from high volume of music.
+     * @property {boolean} [loop=false] - Whether to loop the queue by default.
+     * @property {number} [volume=20] - The default client volume to be used.
+     */
+    /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
      * @param {musicClientOptions} options The music client options avalible to configure.
      */
-    constructor(YouTubeApiKey, options) {
+    constructor(YouTubeApiKey, options = {}) {
         if (typeof YouTubeApiKey !== "string")
             throw new Error("The YouTube Api Key provided is not a string.");
         this.google_api_key = YouTubeApiKey;
