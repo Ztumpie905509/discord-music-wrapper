@@ -488,7 +488,7 @@ const musicFunctions = {
                     musicFunctions.playMusic(msg.guild, queueConstruct.songs[0], serverQueue);
                 } catch (error) {
                     console.error(`I could not join the voice channel: ${error}`);
-                    this.queue.delete(msg.guild.id);
+                    queueList.delete(msg.guild.id);
                     return msg.channel.send(`I could not join the voice channel: ${error}`).then((m) => {
                         return m.delete(10000);
                     });
