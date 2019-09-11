@@ -1,12 +1,12 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function(thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(((resolve) => { resolve(value); })); }
-    return new (P || (P = Promise))(((resolve, reject) => {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
         step((generator = generator.apply(thisArg, _arguments || [])).next());
-    }));
+    });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const discord_js_1 = require("discord.js");
@@ -38,7 +38,9 @@ class musicClient {
         if (options.earProtections) {
             console.log("Caution : The volume limit cap has been removed.\nPlease be sure not to unintentionally input a volume higher than 100, or it may damage your device and/or ears.");
             this.settings.earProtections = options.earProtections;
-        } else { this.settings.earProtections = true; }
+        }
+        else
+            this.settings.earProtections = true;
         if (options.loop)
             this.settings.loop = options.loop;
         else
@@ -82,10 +84,12 @@ class musicClient {
                 return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m) => {
                     return m.delete(10000);
                 });
-            } else {
+            }
+            else {
                 try {
                     var video = yield youtube.getVideo(url);
-                } catch (error) {
+                }
+                catch (error) {
                     try {
                         var videos = yield youtube.searchVideos(searchQuery, 10);
                         let index = 0;
@@ -100,11 +104,12 @@ Please provide a value to select one of the search results ranging from 1-10.
                         });
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
-                                errors    : ['time'],
+                                errors: ['time'],
                                 maxMatches: 1,
-                                time      : 10000
+                                time: 10000
                             });
-                        } catch (err) {
+                        }
+                        catch (err) {
                             console.error(err);
                             return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
                                 return m.delete(10000);
@@ -112,7 +117,8 @@ Please provide a value to select one of the search results ranging from 1-10.
                         }
                         const videoIndex = parseInt(response.first().content);
                         var video = yield youtube.getVideoByID(videos[videoIndex - 1].id);
-                    } catch (err) {
+                    }
+                    catch (err) {
                         console.error(err);
                         return msg.channel.send('🆘 I could not obtain any search results.').then((m) => {
                             return m.delete(10000);
@@ -154,10 +160,12 @@ Please provide a value to select one of the search results ranging from 1-10.
                 return msg.channel.send("You cannot use the playTop command with a playlist.").then((m) => {
                     return m.delete(10000);
                 });
-            } else {
+            }
+            else {
                 try {
                     var video = yield youtube.getVideo(url);
-                } catch (error) {
+                }
+                catch (error) {
                     try {
                         var videos = yield youtube.searchVideos(searchQuery, 10);
                         let index = 0;
@@ -172,11 +180,12 @@ Please provide a value to select one of the search results ranging from 1-10.
                         });
                         try {
                             var response = yield msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11; }, {
-                                errors    : ['time'],
+                                errors: ['time'],
                                 maxMatches: 1,
-                                time      : 10000
+                                time: 10000
                             });
-                        } catch (err) {
+                        }
+                        catch (err) {
                             console.error(err);
                             return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
                                 return m.delete(10000);
@@ -184,7 +193,8 @@ Please provide a value to select one of the search results ranging from 1-10.
                         }
                         const videoIndex = parseInt(response.first().content);
                         var video = yield youtube.getVideoByID(videos[videoIndex - 1].id);
-                    } catch (err) {
+                    }
+                    catch (err) {
                         console.error(err);
                         return msg.channel.send('🆘 I could not obtain any search results.').then((m) => {
                             return m.delete(10000);
@@ -238,15 +248,13 @@ Please provide a value to select one of the search results ranging from 1-10.
             return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000); });
         var index = 0;
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})`; });
-        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => {
-            return __awaiter(this, void 0, void 0, function* () {
-                for (let i = 0; i < results.length; i++) {
-                    yield new Promise((r) => { return setTimeout(r, 500); });
-                    const element = results[i];
-                    msg.channel.send(element).then((m) => { return m.delete(30000); });
-                }
-            }) 
-        });
+        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < results.length; i++) {
+                yield new Promise((r) => { return setTimeout(r, 500); });
+                const element = results[i];
+                msg.channel.send(element).then((m) => { return m.delete(30000); });
+            }
+        }));
     }
     /**
      * Displays the music now playing.
@@ -295,15 +303,13 @@ Please provide a value to select one of the search results ranging from 1-10.
         msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m) => { return m.delete(10000); });
         var index = 0;
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})`; });
-        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => {
-            return __awaiter(this, void 0, void 0, function* () {
-                for (let i = 0; i < results.length; i++) {
-                    yield new Promise((r) => { return setTimeout(r, 500); });
-                    const element = results[i];
-                    msg.channel.send(element).then((m) => { return m.delete(30000); });
-                }
-            }) 
-        });
+        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < results.length; i++) {
+                yield new Promise((r) => { return setTimeout(r, 500); });
+                const element = results[i];
+                msg.channel.send(element).then((m) => { return m.delete(30000); });
+            }
+        }));
     }
     /**
      * Repeats the first song in queue.
@@ -317,14 +323,15 @@ Please provide a value to select one of the search results ranging from 1-10.
             return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000); });
         if (serverQueue.repeat === false) {
             serverQueue.repeat = true;
-            msg.channel.send("The frist song in the queue is now being repeated.").then((m) => { return m.delete(10000); });
+            msg.channel.send("The first song in the queue is now being repeated.").then((m) => { return m.delete(10000); });
             if (serverQueue.loop === true) {
                 serverQueue.loop = false;
                 msg.channel.send("Looping has been disabled to avoid confusion.").then((m) => { return m.delete(10000); });
             }
-        } else {
+        }
+        else {
             serverQueue.repeat = false;
-            msg.channel.send("The frist song in the queue is no longer being repeated.").then((m) => { return m.delete(10000); });
+            msg.channel.send("The first song in the queue is no longer being repeated.").then((m) => { return m.delete(10000); });
         }
     }
     /**
@@ -345,7 +352,8 @@ Please provide a value to select one of the search results ranging from 1-10.
                 serverQueue.repeat = false;
                 msg.channel.send("Repeating the first song has been disabled to avoid confusion.").then((m) => { return m.delete(10000); });
             }
-        } else {
+        }
+        else {
             serverQueue.loop = false;
             msg.channel.send("The song queue is no longer being looped.").then((m) => { return m.delete(10000); });
         }
@@ -362,15 +370,13 @@ Please provide a value to select one of the search results ranging from 1-10.
         musicFunctions.shuffleArray(serverQueue.songs);
         var index = 0;
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})`; });
-        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => {
-            return __awaiter(this, void 0, void 0, function* () {
-                for (let i = 0; i < results.length; i++) {
-                    yield new Promise((r) => { return setTimeout(r, 500); });
-                    const element = results[i];
-                    msg.channel.send(element).then((m) => { return m.delete(30000); });
-                }
-            }) 
-        });
+        musicFunctions.addMusicQueueField(msg, songArray, queue).then((results) => __awaiter(this, void 0, void 0, function* () {
+            for (let i = 0; i < results.length; i++) {
+                yield new Promise((r) => { return setTimeout(r, 500); });
+                const element = results[i];
+                msg.channel.send(element).then((m) => { return m.delete(30000); });
+            }
+        }));
         msg.channel.send("Song queue has been shuffled.").then((m) => { return m.delete(30000); });
     }
     /**
@@ -457,27 +463,27 @@ const musicFunctions = {
         return __awaiter(this, void 0, void 0, function* () {
             const serverQueue = queueList.get(msg.guild.id);
             const song = {
-                guild : msg.guild.name,
-                icon  : video.thumbnails.default.url,
-                id    : video.id,
+                guild: msg.guild.name,
+                icon: video.thumbnails.default.url,
+                id: video.id,
                 length: {
-                    hrs : video.duration.hours,
+                    hrs: video.duration.hours,
                     mins: video.duration.minutes,
                     secs: video.duration.seconds
                 },
                 title: video.title,
-                url  : `https://www.youtube.com/watch?v=${video.id}`
+                url: `https://www.youtube.com/watch?v=${video.id}`
             };
             if (!serverQueue) {
                 var queueConstruct = {
-                    connection : null,
-                    loop       : loopQueue,
-                    playing    : true,
-                    repeat     : false,
-                    songs      : [],
+                    connection: null,
+                    loop: loopQueue,
+                    playing: true,
+                    repeat: false,
+                    songs: [],
                     textChannel: msg.channel,
                     voiceChannel,
-                    volume     : musicVolume
+                    volume: musicVolume
                 };
                 queueList.set(msg.guild.id, queueConstruct);
                 queueConstruct.songs.push(song);
@@ -486,14 +492,16 @@ const musicFunctions = {
                     var connection = yield voiceChannel.join();
                     queueConstruct.connection = connection;
                     musicFunctions.playMusic(msg.guild, queueConstruct.songs[0], queueList);
-                } catch (error) {
+                }
+                catch (error) {
                     console.error(`I could not join the voice channel: ${error}`);
                     queueList.delete(msg.guild.id);
                     return msg.channel.send(`I could not join the voice channel: ${error}`).then((m) => {
                         return m.delete(10000);
                     });
                 }
-            } else {
+            }
+            else {
                 if (top) {
                     serverQueue.songs.splice(1, 0, song);
                     if (playlist)
@@ -502,7 +510,8 @@ const musicFunctions = {
                         return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
                             return m.delete(10000);
                         });
-                } else {
+                }
+                else {
                     serverQueue.songs.push(song);
                     if (playlist)
                         return undefined;
@@ -523,13 +532,14 @@ const musicFunctions = {
                 queueList.delete(guild.id);
                 return;
             }
-        } catch (error) {
+        }
+        catch (error) {
             console.log(error);
         }
         const dispatcher = serverQueue.connection.playStream(ytdl(song.url, {
-            filter       : "audioonly",
+            filter: "audioonly",
             highWaterMark: 1024 * 512,
-            quality      : "highestaudio"
+            quality: "highestaudio"
         })).on('end', (reason) => {
             if (serverQueue.loop === true) {
                 console.log("Song ended, but looped");
@@ -537,10 +547,12 @@ const musicFunctions = {
                 serverQueue.songs.push(toPush);
                 serverQueue.songs.shift();
                 musicFunctions.playMusic(guild, serverQueue.songs[0], queueList);
-            } else if (serverQueue.repeat === true) {
+            }
+            else if (serverQueue.repeat === true) {
                 console.log("Song ended, but repeated");
                 musicFunctions.playMusic(guild, serverQueue.songs[0], queueList);
-            } else {
+            }
+            else {
                 if (reason === 'Stream is not generating quickly enough.')
                     console.log('Song ended.');
                 else

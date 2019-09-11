@@ -297,14 +297,14 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000) })
         if (serverQueue.repeat === false) {
             serverQueue.repeat = true
-            msg.channel.send("The frist song in the queue is now being repeated.").then((m) => { return m.delete(10000) })
+            msg.channel.send("The first song in the queue is now being repeated.").then((m) => { return m.delete(10000) })
             if (serverQueue.loop === true) {
                 serverQueue.loop = false
                 msg.channel.send("Looping has been disabled to avoid confusion.").then((m) => { return m.delete(10000) })
             }
         } else {
             serverQueue.repeat = false
-            msg.channel.send("The frist song in the queue is no longer being repeated.").then((m) => { return m.delete(10000) })
+            msg.channel.send("The first song in the queue is no longer being repeated.").then((m) => { return m.delete(10000) })
         }
     }
     /**
