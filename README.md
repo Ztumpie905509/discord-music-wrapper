@@ -1,6 +1,6 @@
-![NPM](https://img.shields.io/npm/l/discord-music-wrapper)   ![npm](https://img.shields.io/npm/v/discord-music-wrapper)   ![GitHub repo size](https://img.shields.io/github/repo-size/Ztumpie905509/discord-music-wrapper)   ![GitHub language count](https://img.shields.io/github/languages/count/Ztumpie905509/discord-music-wrapper)   ![npm](https://img.shields.io/npm/dm/discord-music-wrapper)    
-
 # discord-music-player
+
+![NPM](https://img.shields.io/npm/l/discord-music-wrapper)   ![npm](https://img.shields.io/npm/v/discord-music-wrapper)   ![GitHub repo size](https://img.shields.io/github/repo-size/Ztumpie905509/discord-music-wrapper)   ![GitHub language count](https://img.shields.io/github/languages/count/Ztumpie905509/discord-music-wrapper)   ![npm](https://img.shields.io/npm/dm/discord-music-wrapper)
 
 This is currently under heavy development.
 
