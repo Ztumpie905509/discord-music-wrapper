@@ -14,7 +14,7 @@
     "rules": {
         "getter-return": "warn",
         "no-console": "off",
-        "curly": ["warn", "multi", "consistent"],
+        "curly": ["warn", "multi"],
         "eqeqeq": ["warn", "always"],
         "no-multi-spaces": "warn",
         "no-useless-catch": "warn",
@@ -29,9 +29,6 @@
         }],
         "array-element-newline": ["warn", "never"],
         "block-spacing": ["warn", "always"],
-        "brace-style": ["warn", "1tbs", {
-            "allowSingleLine": true
-        }],
         "capitalized-comments": ["warn", "always"],
         "comma-dangle": ["warn", {
             "arrays": "never",
@@ -60,11 +57,6 @@
             "before": true,
             "after": true
         }],
-        "key-spacing": ["warn", {
-            "beforeColon": false,
-            "afterColon": true,
-            "align": "colon"
-        }],
         "linebreak-style": ["warn", "windows"],
         "lines-between-class-members": ["error", "never"],
         "no-multiple-empty-lines": ["warn", {
@@ -85,7 +77,6 @@
         "quote-props": ["error", "as-needed"],
         "sort-vars": "warn",
         "space-before-blocks": ["warn", "always"],
-        "space-before-function-paren": ["warn", "never"],
         "space-in-parens": ["warn", "never"],
         "spaced-comment": ["warn", "always"],
         "switch-colon-spacing": ["warn", {
@@ -94,7 +85,6 @@
             }
         ],
         "wrap-regex": "error",
-        "arrow-body-style": ["error", "always"],
         "arrow-parens": ["error", "always"],
         "arrow-spacing": ["warn", {
             "before": true,
@@ -114,9 +104,6 @@
         "no-useless-constructor": "error",
         "no-useless-rename": "error",
         "object-shorthand": ["error", "always"],
-        "prefer-arrow-callback": ["error", {
-            "allowNamedFunctions": false
-        }],
         "prefer-template": "error",
         "rest-spread-spacing": ["error", "always"],
         "sort-imports": ["error", {
