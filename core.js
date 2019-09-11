@@ -485,7 +485,7 @@ const musicFunctions = {
                 try {
                     var connection = yield voiceChannel.join();
                     queueConstruct.connection = connection;
-                    musicFunctions.playMusic(msg.guild, queueConstruct.songs[0], serverQueue);
+                    musicFunctions.playMusic(msg.guild, queueConstruct.songs[0], queueList);
                 } catch (error) {
                     console.error(`I could not join the voice channel: ${error}`);
                     queueList.delete(msg.guild.id);
