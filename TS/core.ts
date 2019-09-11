@@ -336,7 +336,7 @@ Please provide a value to select one of the search results ranging from 1-10.
     public shuffle(msg) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000) })
         musicFunctions.shuffleArray(serverQueue.songs)
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
@@ -344,10 +344,10 @@ Please provide a value to select one of the search results ranging from 1-10.
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
-                msg.channel.send(element).then((m) => { return m.delete(30000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
+                msg.channel.send(element).then((m) => { return m.delete(30000) })
             }
         })
-        msg.channel.send("Song queue has been shuffled.").then((m) => { return m.delete(30000).catch((e) => { if (e) console.log("Deleting a deleted message from #choose-song-area") }) })
+        msg.channel.send("Song queue has been shuffled.").then((m) => { return m.delete(30000) })
     }
     /**
      * Changes the volume of the music.
