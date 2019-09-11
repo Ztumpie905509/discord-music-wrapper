@@ -1,13 +1,21 @@
-var musicClient = require("../core")
-// Do NOT ever use this settings
-const musicPlayer = new musicClient("This-is-not-an-api-key", {
-    earProtections: false,
-    loop          : true,
-    volume        : 100
+const settings = require("./settings")
+const musicClient = require("../index")
+const music = new musicClient(settings.ApiKey)
+const Discord = require("discord.js")
+const client = new Discord.Client()
+client.on("message", (message) => {
+    if (message.author.bot) return
+    var args = message.content.split(" ")
+    args.shift()
+    console.log(args)
+    if (message.content.startsWith("-play")) 
+        music.play(message, args[0])
+    if (message.content.startsWith("-kill")) client.destroy()
 })
-console.log(musicClient)
-console.log(musicPlayer.youtube)
-console.log(musicPlayer.google_api_key)
-console.log(musicPlayer.queueList)
-console.log(musicPlayer.settings)
-console.log("Test passed !")
+client.on("ready", () => {
+    console.log(music)
+    console.log(music.settings)
+    console.log(music.queueList)
+    console.log(music.youtube)
+})
+client.login(settings.token)
