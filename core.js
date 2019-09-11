@@ -18,7 +18,7 @@ class musicClient {
      * @typedef {object} musicClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default.
-     * @property {number} [volume=20] The default client volume to be used.
+     * @property {number} [volume=30] The default client volume to be used.
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
@@ -34,7 +34,7 @@ class musicClient {
         if (options.volume)
             this.settings.volume = options.volume;
         else
-            this.settings.volume = 20;
+            this.settings.volume = 30;
         if (options.earProtections) {
             console.log("Caution : The volume limit cap has been removed.\nPlease be sure not to unintentionally input a volume higher than 100, or it may damage your device and/or ears.");
             this.settings.earProtections = options.earProtections;
