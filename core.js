@@ -15,14 +15,14 @@ var YouTube = require("simple-youtube-api");
 class musicClient {
     /**
      * Options for the music client
-     * @typedef {object} musicClientOptions
+     * @typedef {object} ClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default.
      * @property {number} [volume=30] The default client volume to be used.
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
-     * @param {musicClientOptions} [options] The music client options avalible to configure.
+     * @param {ClientOptions} [options] The music client options avalible to configure.
      */
     constructor(YouTubeApiKey, options = {}) {
         if (typeof YouTubeApiKey !== "string")
@@ -156,11 +156,10 @@ Please provide a value to select one of the search results ranging from 1-10.
                 return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m) => {
                     return m.delete(10000);
                 });
-            if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+            if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/))
                 return msg.channel.send("You cannot use the playTop command with a playlist.").then((m) => {
                     return m.delete(10000);
                 });
-            }
             else {
                 try {
                     var video = yield youtube.getVideo(url);
@@ -501,25 +500,23 @@ const musicFunctions = {
                     });
                 }
             }
+            else if (top) {
+                serverQueue.songs.splice(1, 0, song);
+                if (playlist)
+                    return undefined;
+                else
+                    return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
+                        return m.delete(10000);
+                    });
+            }
             else {
-                if (top) {
-                    serverQueue.songs.splice(1, 0, song);
-                    if (playlist)
-                        return undefined;
-                    else
-                        return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
-                            return m.delete(10000);
-                        });
-                }
-                else {
-                    serverQueue.songs.push(song);
-                    if (playlist)
-                        return undefined;
-                    else
-                        return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
-                            return m.delete(10000);
-                        });
-                }
+                serverQueue.songs.push(song);
+                if (playlist)
+                    return undefined;
+                else
+                    return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
+                        return m.delete(10000);
+                    });
             }
             return undefined;
         });

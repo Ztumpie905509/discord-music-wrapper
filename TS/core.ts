@@ -16,9 +16,9 @@ export type ClientOptions = {
 }
 
 export class musicClient {
-    /**
+    /** 
      * Options for the music client
-     * @typedef {object} musicClientOptions
+     * @typedef {object} ClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default. 
      * @property {number} [volume=30] The default client volume to be used.
@@ -26,7 +26,7 @@ export class musicClient {
 
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
-     * @param {musicClientOptions} [options] The music client options avalible to configure.
+     * @param {ClientOptions} [options] The music client options avalible to configure.
      */
     public constructor(YouTubeApiKey: string, options: ClientOptions = {}) {
         if (typeof YouTubeApiKey !== "string") throw new Error("The YouTube Api Key provided is not a string.")
@@ -145,11 +145,11 @@ Please provide a value to select one of the search results ranging from 1-10.
             return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m: Message) => {
                 return m.delete(10000)
             })
-        if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
+        if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/))
             return msg.channel.send("You cannot use the playTop command with a playlist.").then((m: Message) => {
                 return m.delete(10000)
             })
-        } else {
+        else {
             try {
                 var video = await youtube.getVideo(url);
             } catch (error) {
@@ -460,7 +460,7 @@ const musicFunctions = {
                     return m.delete(10000)
                 })
             }
-        } else {
+        } else
             if (top) {
                 serverQueue.songs.splice(1, 0, song)
                 if (playlist) return undefined;
@@ -474,7 +474,6 @@ const musicFunctions = {
                     return m.delete(10000)
                 })
             }
-        }
         return undefined;
     },
     playMusic(guild, song, queueList) {

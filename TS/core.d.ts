@@ -13,14 +13,14 @@ export declare type ClientOptions = {
 export declare class musicClient {
     /**
      * Options for the music client
-     * @typedef {object} musicClientOptions
+     * @typedef {object} ClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default.
      * @property {number} [volume=30] The default client volume to be used.
      */
     /**
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
-     * @param {musicClientOptions} [options] The music client options avalible to configure.
+     * @param {ClientOptions} [options] The music client options avalible to configure.
      */
     constructor(YouTubeApiKey: string, options?: ClientOptions);
     /**
