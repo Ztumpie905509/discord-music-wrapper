@@ -34,5 +34,6 @@
   },
   "directories": {
     "test": "test"
-  }
+  },
+  "keywords": ["music", "player", "wrapper", "discord", "discord.js", "YouTube"]
 }
