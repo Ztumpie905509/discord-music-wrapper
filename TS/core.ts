@@ -57,16 +57,22 @@ export class musicClient {
         const url = searchQuery ? searchQuery.replace(/<(.+)>/g, '$1') : '';
         const voiceChannel = msg.member.voiceChannel;
         if (!voiceChannel) return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!').then((m: Message) => {
-            return m.delete(10000)
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
         })
         const permissions = voiceChannel.permissionsFor(msg.client.user);
         if (!permissions.has('CONNECT'))
             return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!').then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         if (!permissions.has('SPEAK'))
             return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
             const playlist = await youtube.getPlaylist(url);
@@ -77,7 +83,9 @@ export class musicClient {
                 await musicFunctions.handleVideo(this.queueList, video2, msg, voiceChannel, this.settings.volume, this.settings.loop, false, true);
             }
             return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         } else {
             try {
@@ -93,7 +101,9 @@ ${videos.map((video2) => { return `**${++index} -** ${video2.title}` }).join('\n
 
 Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m: Message) => {
-                        return m.delete(10000)
+                        return m.delete(10000).catch((reason) => {
+                            console.log(reason)
+                        })
                     })
                     try {
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
@@ -104,7 +114,9 @@ Please provide a value to select one of the search results ranging from 1-10.
                     } catch (err) {
                         console.error(err);
                         return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m: Message) => {
-                            return m.delete(10000)
+                            return m.delete(10000).catch((reason) => {
+                                console.log(reason)
+                            })
                         })
                     }
                     const videoIndex = parseInt(response.first().content);
@@ -112,7 +124,9 @@ Please provide a value to select one of the search results ranging from 1-10.
                 } catch (err) {
                     console.error(err);
                     return msg.channel.send('🆘 I could not obtain any search results.').then((m: Message) => {
-                        return m.delete(10000)
+                        return m.delete(10000).catch((reason) => {
+                            console.log(reason)
+                        })
                     })
                 }
             }
@@ -134,20 +148,28 @@ Please provide a value to select one of the search results ranging from 1-10.
         const voiceChannel = msg.member.voiceChannel;
         if (!voiceChannel)
             return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!').then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         const permissions = voiceChannel.permissionsFor(msg.client.user);
         if (!permissions.has('CONNECT'))
             return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!').then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         if (!permissions.has('SPEAK'))
             return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/))
             return msg.channel.send("You cannot use the playTop command with a playlist.").then((m: Message) => {
-                return m.delete(10000)
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
             })
         else {
             try {
@@ -163,7 +185,9 @@ ${videos.map((video2) => { return `**${++index} -** ${video2.title}` }).join('\n
 
 Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m: Message) => {
-                        return m.delete(10000)
+                        return m.delete(10000).catch((reason) => {
+                            console.log(reason)
+                        })
                     })
                     try {
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
@@ -174,7 +198,9 @@ Please provide a value to select one of the search results ranging from 1-10.
                     } catch (err) {
                         console.error(err);
                         return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m: Message) => {
-                            return m.delete(10000)
+                            return m.delete(10000).catch((reason) => {
+                                console.log(reason)
+                            })
                         })
                     }
                     const videoIndex = parseInt(response.first().content);
@@ -182,7 +208,9 @@ Please provide a value to select one of the search results ranging from 1-10.
                 } catch (err) {
                     console.error(err);
                     return msg.channel.send('🆘 I could not obtain any search results.').then((m: Message) => {
-                        return m.delete(10000)
+                        return m.delete(10000).catch((reason) => {
+                            console.log(reason)
+                        })
                     })
                 }
             }
@@ -198,8 +226,16 @@ Please provide a value to select one of the search results ranging from 1-10.
     public stop(msg: Message) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
-        if (!serverQueue) return msg.channel.send('There is nothing playing that I could stop for you.').then((m: Message) => { return m.delete(10000) })
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
+        if (!serverQueue) return msg.channel.send('There is nothing playing that I could stop for you.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end("Bot got stopped.")
     }
@@ -213,8 +249,16 @@ Please provide a value to select one of the search results ranging from 1-10.
     public skip(msg: Message) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
-        if (!serverQueue) return msg.channel.send('There is nothing playing that I could skip for you.').then((m: Message) => { return m.delete(10000) })
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
+        if (!serverQueue) return msg.channel.send('There is nothing playing that I could skip for you.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         serverQueue.connection.dispatcher.end("Song got skipped.")
     }
     /**
@@ -224,7 +268,11 @@ Please provide a value to select one of the search results ranging from 1-10.
     public showQueue(msg: Message) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
         musicFunctions.addMusicQueueField(msg, songArray, queue).then(async (results) => {
@@ -242,14 +290,22 @@ Please provide a value to select one of the search results ranging from 1-10.
     public nowPlaying(msg: Message) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         var embed = new RichEmbed()
             .setColor(Math.floor(Math.random() * 16777214) + 1)
             .setTimestamp()
             .setThumbnail(serverQueue.songs[0].icon)
             .addField(`Now playing in ${msg.guild.name}:`, `[**${serverQueue.songs[0].title}**](${serverQueue.songs[0].url})`)
             .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL)
-        return msg.channel.send(embed).then((m: Message) => { return m.delete(10000) })
+        return msg.channel.send(embed).then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
     }
     /** 
      * Removes a certain song in the music queue.
@@ -271,11 +327,23 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (typeof queueIndex !== "number") return console.log("The query provided is not a number.")
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         var deleteIndex = queueIndex - 1
-        if (deleteIndex === 0) return msg.channel.send(`You cannot remove the song that is now playing. To remove it, use skip command instead.`).then((m: Message) => { return m.delete(10000) })
+        if (deleteIndex === 0) return msg.channel.send(`You cannot remove the song that is now playing. To remove it, use skip command instead.`).then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         var removed = serverQueue.songs.splice(deleteIndex, 1)
-        msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m: Message) => { return m.delete(10000) })
+        msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
         musicFunctions.addMusicQueueField(msg, songArray, queue).then(async (results) => {
@@ -294,17 +362,33 @@ Please provide a value to select one of the search results ranging from 1-10.
      */
     public repeat(msg) {
         const serverQueue = this.queueList.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         if (serverQueue.repeat === false) {
             serverQueue.repeat = true
-            msg.channel.send("The first song in the queue is now being repeated.").then((m) => { return m.delete(10000) })
+            msg.channel.send("The first song in the queue is now being repeated.").then((m) => {
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
+            })
             if (serverQueue.loop === true) {
                 serverQueue.loop = false
-                msg.channel.send("Looping has been disabled to avoid confusion.").then((m) => { return m.delete(10000) })
+                msg.channel.send("Looping has been disabled to avoid confusion.").then((m) => {
+                    return m.delete(10000).catch((reason) => {
+                        console.log(reason)
+                    })
+                })
             }
         } else {
             serverQueue.repeat = false
-            msg.channel.send("The first song in the queue is no longer being repeated.").then((m) => { return m.delete(10000) })
+            msg.channel.send("The first song in the queue is no longer being repeated.").then((m) => {
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
+            })
         }
     }
     /**
@@ -316,17 +400,33 @@ Please provide a value to select one of the search results ranging from 1-10.
     public loop(msg: Message) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         if (serverQueue.loop === false) {
             serverQueue.loop = true
-            msg.channel.send("The song queue is now being looped.").then((m: Message) => { return m.delete(10000) })
+            msg.channel.send("The song queue is now being looped.").then((m: Message) => {
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
+            })
             if (serverQueue.repeat === true) {
                 serverQueue.repeat = false
-                msg.channel.send("Repeating the first song has been disabled to avoid confusion.").then((m: Message) => { return m.delete(10000) })
+                msg.channel.send("Repeating the first song has been disabled to avoid confusion.").then((m: Message) => {
+                    return m.delete(10000).catch((reason) => {
+                        console.log(reason)
+                    })
+                })
             }
         } else {
             serverQueue.loop = false
-            msg.channel.send("The song queue is no longer being looped.").then((m: Message) => { return m.delete(10000) })
+            msg.channel.send("The song queue is no longer being looped.").then((m: Message) => {
+                return m.delete(10000).catch((reason) => {
+                    console.log(reason)
+                })
+            })
         }
     }
     /**
@@ -336,7 +436,11 @@ Please provide a value to select one of the search results ranging from 1-10.
     public shuffle(msg) {
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => { return m.delete(10000) })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         musicFunctions.shuffleArray(serverQueue.songs)
         var index = 0
         var songArray = serverQueue.songs.map((song) => { return `**${++index}-** [${song.title}](${song.url})` })
@@ -365,14 +469,30 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (typeof volume !== "number") return console.log("The volume provided is not a number")
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => { return m.delete(10000) })
-        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => { return m.delete(10000) })
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
+        if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         if (volume > 100 && this.settings.earProtections === true) return msg.channel.send(`I think you still need your ears for listening to more beautiful music.\nThe volume limit was capped on 100. The volume has not been modified. The current volume is ${serverQueue.volume}.`)
         if (volume > 100) msg.channel.send("WARNING : THE MUSIC WILL PLAY IN AN EXTREMELY LOUD VOLUME.").then((m: Message) => { return m.delete(15000) })
-        if (volume < 0) return msg.channel.send(`The current volume is ${serverQueue.volume}.`).then((m: Message) => { return m.delete(10000) })
+        if (volume < 0) return msg.channel.send(`The current volume is ${serverQueue.volume}.`).then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         serverQueue.volume = volume;
         serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 100);
-        return msg.channel.send(`I set the volume to: **${volume}**`).then((m: Message) => { return m.delete(10000) })
+        return msg.channel.send(`I set the volume to: **${volume}**`).then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
+        })
     }
 }
 
@@ -457,7 +577,9 @@ const musicFunctions = {
                 console.error(`I could not join the voice channel: ${error}`);
                 queueList.delete(msg.guild.id);
                 return msg.channel.send(`I could not join the voice channel: ${error}`).then((m: Message) => {
-                    return m.delete(10000)
+                    return m.delete(10000).catch((reason) => {
+                        console.log(reason)
+                    })
                 })
             }
         } else
@@ -465,13 +587,17 @@ const musicFunctions = {
                 serverQueue.songs.splice(1, 0, song)
                 if (playlist) return undefined;
                 else return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m: Message) => {
-                    return m.delete(10000)
+                    return m.delete(10000).catch((reason) => {
+                        console.log(reason)
+                    })
                 })
             } else {
                 serverQueue.songs.push(song);
                 if (playlist) return undefined;
                 else return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m: Message) => {
-                    return m.delete(10000)
+                    return m.delete(10000).catch((reason) => {
+                        console.log(reason)
+                    })
                 })
             }
         return undefined;
@@ -510,7 +636,9 @@ const musicFunctions = {
         }).on('error', (error) => { return console.error(error) });
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`).then((m: Message) => {
-            return m.delete(10000)
+            return m.delete(10000).catch((reason) => {
+                console.log(reason)
+            })
         })
     },
     shuffleArray(array) {

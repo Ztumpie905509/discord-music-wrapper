@@ -40,14 +40,14 @@ export declare class musicClient {
      * @param msg The message object that triggers the command.
      * @param {string} searchQuery Search string for the video/YouTube video URL
      */
-    playTop(msg: Message, searchQuery: string): Promise<Message>;
+    playTop(msg: Message, searchQuery: string): Promise<void | Message>;
     /**
      * Stops music and remove the music queue.
      *
      * This will also cause the bot to leave the voice channel.
      * @param msg The message object that triggers the command.
      */
-    stop(msg: Message): Promise<Message>;
+    stop(msg: Message): Promise<void | Message>;
     /**
      * Skips the music which the bot is now playing.
      *
@@ -55,17 +55,17 @@ export declare class musicClient {
      * this will also cause the bot to leave the voice channel.
      * @param msg The message object that triggers the command.
      */
-    skip(msg: Message): Promise<Message>;
+    skip(msg: Message): Promise<void | Message>;
     /**
      * Displays the music queue.
      * @param msg The message object that triggers the command.
      */
-    showQueue(msg: Message): Promise<Message>;
+    showQueue(msg: Message): Promise<void | Message>;
     /**
      * Displays the music now playing.
      * @param msg The message object that triggers the command.
      */
-    nowPlaying(msg: Message): Promise<Message>;
+    nowPlaying(msg: Message): Promise<void | Message>;
     /**
      * Removes a certain song in the music queue.
      *
@@ -82,7 +82,7 @@ export declare class musicClient {
      * // New song queue :
      * // 1. National Anthem of USSR
      */
-    remove(msg: Message, queueIndex: number): void | Promise<Message>;
+    remove(msg: Message, queueIndex: number): void | Promise<void | Message>;
     /**
      * Repeats the first song in queue.
      *
@@ -96,7 +96,7 @@ export declare class musicClient {
      * Repeat a single song will be disabled upon usage of this command.
      * @param msg The message object that triggers the command.
      */
-    loop(msg: Message): Promise<Message>;
+    loop(msg: Message): Promise<void | Message>;
     /**
      * Shuffles the whole music queue.
      * @param msg The message object that triggers the command.
@@ -114,5 +114,5 @@ export declare class musicClient {
      * @param msg The message object that triggers the command.
      * @param {number} volume A number to change the volume based on 100.
      */
-    volume(msg: Message, volume?: number): void | Promise<Message | Message[]>;
+    volume(msg: Message, volume?: number): void | Promise<Message | Message[]> | Promise<void | Message>;
 }
