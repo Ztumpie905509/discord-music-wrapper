@@ -1,6 +1,5 @@
 import { Message, RichEmbed, VoiceChannel } from "discord.js"
 import * as ytdl from "ytdl-core"
-import { type } from "os"
 var YouTube = require("simple-youtube-api")
 export interface musicClient {
     google_api_key: string
