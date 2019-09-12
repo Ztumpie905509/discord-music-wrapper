@@ -279,7 +279,11 @@ Please provide a value to select one of the search results ranging from 1-10.
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
-                msg.channel.send(element).then((m: Message) => { return m.delete(30000) })
+                msg.channel.send(element).then((m: Message) => {
+                    return m.delete(30000).catch((reason) => {
+                        console.log(reason)
+                    })
+                })
             }
         })
     }
@@ -350,7 +354,11 @@ Please provide a value to select one of the search results ranging from 1-10.
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
-                msg.channel.send(element).then((m: Message) => { return m.delete(30000) })
+                msg.channel.send(element).then((m: Message) => {
+                    return m.delete(30000).catch((reason) => {
+                        console.log(reason)
+                    })
+                })
             }
         })
     }
@@ -448,10 +456,18 @@ Please provide a value to select one of the search results ranging from 1-10.
             for (let i = 0; i < results.length; i++) {
                 await new Promise((r) => { return setTimeout(r, 500) })
                 const element = results[i];
-                msg.channel.send(element).then((m) => { return m.delete(30000) })
+                msg.channel.send(element).then((m) => {
+                    return m.delete(30000).catch((reason) => {
+                        console.log(reason)
+                    })
+                })
             }
         })
-        msg.channel.send("Song queue has been shuffled.").then((m) => { return m.delete(30000) })
+        msg.channel.send("Song queue has been shuffled.").then((m) => {
+            return m.delete(30000).catch((reason) => {
+                console.log(reason)
+            })
+        })
     }
     /**
      * Changes the volume of the music.
@@ -480,7 +496,11 @@ Please provide a value to select one of the search results ranging from 1-10.
             })
         })
         if (volume > 100 && this.settings.earProtections === true) return msg.channel.send(`I think you still need your ears for listening to more beautiful music.\nThe volume limit was capped on 100. The volume has not been modified. The current volume is ${serverQueue.volume}.`)
-        if (volume > 100) msg.channel.send("WARNING : THE MUSIC WILL PLAY IN AN EXTREMELY LOUD VOLUME.").then((m: Message) => { return m.delete(15000) })
+        if (volume > 100) msg.channel.send("WARNING : THE MUSIC WILL PLAY IN AN EXTREMELY LOUD VOLUME.").then((m: Message) => {
+            return m.delete(15000).catch((reason) => {
+                console.log(reason)
+            })
+        })
         if (volume < 0) return msg.channel.send(`The current volume is ${serverQueue.volume}.`).then((m: Message) => {
             return m.delete(10000).catch((reason) => {
                 console.log(reason)
