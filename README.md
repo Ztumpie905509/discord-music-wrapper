@@ -19,5 +19,7 @@ This package can help you with playing music in a discord.js bot.
 ## Links
 
 Github issues : <https://github.com/Ztumpie905509/discord-music-wrapper/issues>
+
 Github pull requesets : <https://github.com/Ztumpie905509/discord-music-wrapper/pulls>
+
 npm package page : <https://www.npmjs.com/package/discord-music-wrapper>
