@@ -1,5 +1,6 @@
 import { Message, RichEmbed, VoiceChannel } from "discord.js"
 import * as ytdl from "ytdl-core"
+import { type } from "os"
 var YouTube = require("simple-youtube-api")
 export interface musicClient {
     google_api_key: string
@@ -11,6 +12,7 @@ export interface musicClient {
 export type ClientOptions = {
     earProtections?: boolean
     loop?: boolean
+    songChooseTimeout?: number
     volume?: number
 }
 
@@ -20,6 +22,7 @@ export class musicClient {
      * @typedef {object} ClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default. 
+     * @property {number} [songChooseTimeout=10] The default timeout for song choosing, in terms of seconds.
      * @property {number} [volume=30] The default client volume to be used.
      */
 
@@ -33,9 +36,11 @@ export class musicClient {
         this.youtube = new YouTube(this.google_api_key)
         this.queueList = new Map()
         this.settings = {}
+        if (options.songChooseTimeout) this.settings.songChooseTimeout = options.songChooseTimeout * 1000
+        else this.settings.songChooseTimeout = 10000
         if (options.volume) this.settings.volume = options.volume
         else this.settings.volume = 30
-        if (options.earProtections) {
+        if (options.earProtections !== true) {
             console.log("Caution : The volume limit cap has been removed.\nPlease be sure not to unintentionally input a volume higher than 100, or it may damage your device and/or ears.")
             this.settings.earProtections = options.earProtections
         }
@@ -108,7 +113,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
                             errors: ['time'],
                             maxMatches: 1,
-                            time: 10000
+                            time: this.settings.songChooseTimeout
                         });
                     } catch (err) {
                         console.error(err);
@@ -192,7 +197,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                         var response = await msg.channel.awaitMessages((msg2) => { return msg2.content > 0 && msg2.content < 11 }, {
                             errors: ['time'],
                             maxMatches: 1,
-                            time: 10000
+                            time: this.settings.songChooseTimeout
                         });
                     } catch (err) {
                         console.error(err);

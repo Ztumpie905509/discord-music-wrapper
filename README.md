@@ -13,8 +13,9 @@ This package can help you with playing music in a discord.js bot.
 | Option |Default|Description|
 |---|---|---|
 |`earProtections`|`true`|Using `false` will by pass the limit on the volume command, accepting volumes higher than `100`.|
-|`loop`|`false`|Using `true` will set the loop setting enabled upon queue creation|
-|`volume`|`30`|Volume based on `100`, such that the default setting will be `30/100` and thus make the volume safe for turning the music bot volume in discord to 100%. Tuning up the volume higher than `50` is not recommended. |
+|`loop`|`false`|Using `true` will set the loop setting enabled upon queue creation.|
+|`songChooseTimeout`|`10`|The song choose timeout after searching for a song, in terms of seconds. Default is `10` seconds.|
+|`volume`|`30`|Volume based on `100`, such that the default setting will be `30/100` and thus make the volume safe for turning the music bot volume in discord to 100%. Tuning up the volume higher than `50` is not recommended.|
 
 ## Links
 

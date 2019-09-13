@@ -8,6 +8,7 @@ export interface musicClient {
 export declare type ClientOptions = {
     earProtections?: boolean;
     loop?: boolean;
+    songChooseTimeout?: number;
     volume?: number;
 };
 export declare class musicClient {
@@ -16,6 +17,7 @@ export declare class musicClient {
      * @typedef {object} ClientOptions
      * @property {boolean} [earProtections=true] Whether to protect ears from high volume of music.
      * @property {boolean} [loop=false] Whether to loop the queue by default.
+     * @property {number} [songChooseTimeout=10] The default timeout for song choosing, in terms of seconds.
      * @property {number} [volume=30] The default client volume to be used.
      */
     /**
