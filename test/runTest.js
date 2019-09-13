@@ -1,21 +1,9 @@
-const settings = require("./settings")
 const musicClient = require("../index")
-const music = new musicClient(settings.ApiKey)
-const Discord = require("discord.js")
-const client = new Discord.Client()
-client.on("message", (message) => {
-    if (message.author.bot) return
-    var args = message.content.split(" ")
-    args.shift()
-    console.log(args)
-    if (message.content.startsWith("-play")) 
-        music.play(message, args[0])
-    if (message.content.startsWith("-kill")) client.destroy()
+const music = new musicClient("Some-API-keys-here", {
+    awaitSongChoose: 15,
+    earProtections: false,
+    loop: true,
+    volume: 40
 })
-client.on("ready", () => {
-    console.log(music)
-    console.log(music.settings)
-    console.log(music.queueList)
-    console.log(music.youtube)
-})
-client.login(settings.token)
+console.log(music)
+console.log("Test completed !")
