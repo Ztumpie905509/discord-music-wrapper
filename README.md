@@ -1,6 +1,6 @@
 # discord-music-wrapper
 
-[![discord server](https://discordapp.com/api/guilds/328479087146303498/widget.png)](https://discord.gg/UGXYFdt) [![Build Status](https://travis-ci.org/Ztumpie905509/discord-music-wrapper.svg?branch=master)](https://travis-ci.org/Ztumpie905509/discord-music-wrapper) [![license](https://badgen.net/github/license/ztumpie905509/discord-music-wrapper)](https://github.com/Ztumpie905509/discord-music-wrapper/blob/master/LICENSE)
+[![discord server](https://discordapp.com/api/guilds/328479087146303498/widget.png)](https://discord.gg/UGXYFdt) [![Build Status](https://travis-ci.org/Ztumpie905509/discord-music-wrapper.svg?branch=master)](https://travis-ci.org/Ztumpie905509/discord-music-wrapper) [![license](https://badgen.net/github/license/ztumpie905509/discord-music-wrapper)](https://github.com/Ztumpie905509/discord-music-wrapper/blob/master/LICENSE) ![Size](https://badgen.net/bundlephobia/minzip/discord-music-wrapper)
 
 [![NPM](https://nodei.co/npm/discord-music-wrapper.png)](https://nodei.co/npm/discord-music-wrapper/)
 
