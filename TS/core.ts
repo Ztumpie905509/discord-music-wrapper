@@ -533,7 +533,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.paused = true
             return msg.channel.send("The song playback has been stopped.")
         } else {
-            return msg.channel.send("The song playback is already stopped.")  
+            return msg.channel.send("The song playback is already stopped.")
         }
     }
     /**
@@ -547,7 +547,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.paused = false
             return msg.channel.send("The song playback has been resumed.")
         } else {
-            return msg.channel.send("The song playback is not stopped.")  
+            return msg.channel.send("The song playback is not stopped.")
         }
     }
 }
