@@ -1,7 +1,7 @@
 {
   "name": "discord-music-wrapper",
   "version": "0.1.6",
-  "description": "A discord.js bot music functions warpper.",
+  "description": "A discord.js bot music funciton warpper.",
   "main": "index.js",
   "scripts": {
     "test": "node ./test/runTest.js"
