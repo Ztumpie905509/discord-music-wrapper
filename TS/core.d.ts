@@ -116,5 +116,15 @@ export declare class musicClient {
      * @param msg The message object that triggers the command.
      * @param {number} volume A number to change the volume based on 100.
      */
-    volume(msg: Message, volume?: number): void | Promise<Message | Message[]> | Promise<void | Message>;
+    volume(msg: Message, volume?: number): Promise<Message | Message[]> | Promise<void | Message>;
+    /**
+     * Pause the music playback.
+     * @param msg The message object that triggers the command.
+     */
+    pause(msg: Message): Promise<Message | Message[]>;
+    /**
+     * Resumes the music playback.
+     * @param msg The message object that triggers the command.
+     */
+    resume(msg: Message): Promise<Message | Message[]>;
 }

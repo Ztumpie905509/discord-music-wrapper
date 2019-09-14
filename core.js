@@ -68,20 +68,20 @@ class musicClient {
             if (!voiceChannel)
                 return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             const permissions = voiceChannel.permissionsFor(msg.client.user);
             if (!permissions.has('CONNECT'))
                 return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             if (!permissions.has('SPEAK'))
                 return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/)) {
@@ -94,7 +94,7 @@ class musicClient {
                 }
                 return msg.channel.send(`✅ Playlist: **${playlist.title}** has been added to the queue!`).then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
@@ -114,7 +114,7 @@ ${videos.map((video2) => { return `**${++index} -** ${video2.title}`; }).join('\
 Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000).catch((reason) => {
-                                console.log(reason);
+                                console.log(`Cannot delete the message : ${reason}`);
                             });
                         });
                         try {
@@ -128,7 +128,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                             console.error(err);
                             return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
                                 return m.delete(10000).catch((reason) => {
-                                    console.log(reason);
+                                    console.log(`Cannot delete the message : ${reason}`);
                                 });
                             });
                         }
@@ -139,7 +139,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                         console.error(err);
                         return msg.channel.send('🆘 I could not obtain any search results.').then((m) => {
                             return m.delete(10000).catch((reason) => {
-                                console.log(reason);
+                                console.log(`Cannot delete the message : ${reason}`);
                             });
                         });
                     }
@@ -165,26 +165,26 @@ Please provide a value to select one of the search results ranging from 1-10.
             if (!voiceChannel)
                 return msg.channel.send('I\'m sorry but you need to be in a voice channel to play music!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             const permissions = voiceChannel.permissionsFor(msg.client.user);
             if (!permissions.has('CONNECT'))
                 return msg.channel.send('I cannot connect to your voice channel, make sure I have the proper permissions!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             if (!permissions.has('SPEAK'))
                 return msg.channel.send('I cannot speak in this voice channel, make sure I have the proper permissions!').then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             if (url.match(/^https?:\/\/(www.youtube.com|youtube.com)\/playlist(.*)$/))
                 return msg.channel.send("You cannot use the playTop command with a playlist.").then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             else {
@@ -203,7 +203,7 @@ ${videos.map((video2) => { return `**${++index} -** ${video2.title}`; }).join('\
 Please provide a value to select one of the search results ranging from 1-10.
 					`).then((m) => {
                             return m.delete(10000).catch((reason) => {
-                                console.log(reason);
+                                console.log(`Cannot delete the message : ${reason}`);
                             });
                         });
                         try {
@@ -217,7 +217,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                             console.error(err);
                             return msg.channel.send('No or invalid value entered, cancelling video selection.').then((m) => {
                                 return m.delete(10000).catch((reason) => {
-                                    console.log(reason);
+                                    console.log(`Cannot delete the message : ${reason}`);
                                 });
                             });
                         }
@@ -228,7 +228,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                         console.error(err);
                         return msg.channel.send('🆘 I could not obtain any search results.').then((m) => {
                             return m.delete(10000).catch((reason) => {
-                                console.log(reason);
+                                console.log(`Cannot delete the message : ${reason}`);
                             });
                         });
                     }
@@ -249,13 +249,13 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!msg.member.voiceChannel)
             return msg.channel.send('You are not in a voice channel!').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (!serverQueue)
             return msg.channel.send('There is nothing playing that I could stop for you.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         serverQueue.songs = [];
@@ -274,13 +274,13 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!msg.member.voiceChannel)
             return msg.channel.send('You are not in a voice channel!').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (!serverQueue)
             return msg.channel.send('There is nothing playing that I could skip for you.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         serverQueue.connection.dispatcher.end("Song got skipped.");
@@ -295,7 +295,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         var index = 0;
@@ -306,7 +306,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                 const element = results[i];
                 msg.channel.send(element).then((m) => {
                     return m.delete(30000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
@@ -322,7 +322,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         var embed = new discord_js_1.RichEmbed()
@@ -333,7 +333,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             .setFooter(`Requested by ${msg.author.username}`, msg.author.avatarURL);
         return msg.channel.send(embed).then((m) => {
             return m.delete(10000).catch((reason) => {
-                console.log(reason);
+                console.log(`Cannot delete the message : ${reason}`);
             });
         });
     }
@@ -361,20 +361,20 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         var deleteIndex = queueIndex - 1;
         if (deleteIndex === 0)
             return msg.channel.send(`You cannot remove the song that is now playing. To remove it, use skip command instead.`).then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         var removed = serverQueue.songs.splice(deleteIndex, 1);
         msg.channel.send(`**${removed[0].title}** has been removed from the queue.`).then((m) => {
             return m.delete(10000).catch((reason) => {
-                console.log(reason);
+                console.log(`Cannot delete the message : ${reason}`);
             });
         });
         var index = 0;
@@ -385,7 +385,7 @@ Please provide a value to select one of the search results ranging from 1-10.
                 const element = results[i];
                 msg.channel.send(element).then((m) => {
                     return m.delete(30000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
@@ -402,21 +402,21 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (serverQueue.repeat === false) {
             serverQueue.repeat = true;
             msg.channel.send("The first song in the queue is now being repeated.").then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
             if (serverQueue.loop === true) {
                 serverQueue.loop = false;
                 msg.channel.send("Looping has been disabled to avoid confusion.").then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
@@ -425,7 +425,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.repeat = false;
             msg.channel.send("The first song in the queue is no longer being repeated.").then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         }
@@ -442,21 +442,21 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (serverQueue.loop === false) {
             serverQueue.loop = true;
             msg.channel.send("The song queue is now being looped.").then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
             if (serverQueue.repeat === true) {
                 serverQueue.repeat = false;
                 msg.channel.send("Repeating the first song has been disabled to avoid confusion.").then((m) => {
                     return m.delete(10000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
@@ -465,7 +465,7 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.loop = false;
             msg.channel.send("The song queue is no longer being looped.").then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         }
@@ -480,7 +480,7 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         musicFunctions.shuffleArray(serverQueue.songs);
@@ -492,14 +492,14 @@ Please provide a value to select one of the search results ranging from 1-10.
                 const element = results[i];
                 msg.channel.send(element).then((m) => {
                     return m.delete(30000).catch((reason) => {
-                        console.log(reason);
+                        console.log(`Cannot delete the message : ${reason}`);
                     });
                 });
             }
         }));
         msg.channel.send("Song queue has been shuffled.").then((m) => {
             return m.delete(30000).catch((reason) => {
-                console.log(reason);
+                console.log(`Cannot delete the message : ${reason}`);
             });
         });
     }
@@ -517,19 +517,23 @@ Please provide a value to select one of the search results ranging from 1-10.
      */
     volume(msg, volume = -1) {
         if (typeof volume !== "number")
-            return console.log("The volume provided is not a number");
+            return msg.channel.send("The volume provided is not a number").then((m) => {
+                return m.delete(10000).catch((reason) => {
+                    console.log(`Cannot delete the message : ${reason}`);
+                });
+            });
         const queue = this.queueList;
         const serverQueue = queue.get(msg.guild.id);
         if (!msg.member.voiceChannel)
             return msg.channel.send('You are not in a voice channel!').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (!serverQueue)
             return msg.channel.send('There is nothing playing.').then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (volume > 100 && this.settings.earProtections === true)
@@ -537,22 +541,52 @@ Please provide a value to select one of the search results ranging from 1-10.
         if (volume > 100)
             msg.channel.send("WARNING : THE MUSIC WILL PLAY IN AN EXTREMELY LOUD VOLUME.").then((m) => {
                 return m.delete(15000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         if (volume < 0)
             return msg.channel.send(`The current volume is ${serverQueue.volume}.`).then((m) => {
                 return m.delete(10000).catch((reason) => {
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 });
             });
         serverQueue.volume = volume;
         serverQueue.connection.dispatcher.setVolumeLogarithmic(volume / 100);
         return msg.channel.send(`I set the volume to: **${volume}**`).then((m) => {
             return m.delete(10000).catch((reason) => {
-                console.log(reason);
+                console.log(`Cannot delete the message : ${reason}`);
             });
         });
+    }
+    /**
+     * Pause the music playback.
+     * @param msg The message object that triggers the command.
+     */
+    pause(msg) {
+        const queue = this.queueList;
+        const serverQueue = queue.get(msg.guild.id);
+        if (serverQueue.paused === false) {
+            serverQueue.paused = true;
+            return msg.channel.send("The song playback has been stopped.");
+        }
+        else {
+            return msg.channel.send("The song playback is already stopped.");
+        }
+    }
+    /**
+     * Resumes the music playback.
+     * @param msg The message object that triggers the command.
+     */
+    resume(msg) {
+        const queue = this.queueList;
+        const serverQueue = queue.get(msg.guild.id);
+        if (serverQueue.paused === true) {
+            serverQueue.paused = false;
+            return msg.channel.send("The song playback has been resumed.");
+        }
+        else {
+            return msg.channel.send("The song playback is not stopped.");
+        }
     }
 }
 exports.musicClient = musicClient;
@@ -622,7 +656,7 @@ const musicFunctions = {
                 var queueConstruct = {
                     connection: null,
                     loop: loopQueue,
-                    playing: true,
+                    paused: true,
                     repeat: false,
                     songs: [],
                     textChannel: msg.channel,
@@ -642,7 +676,7 @@ const musicFunctions = {
                     queueList.delete(msg.guild.id);
                     return msg.channel.send(`I could not join the voice channel: ${error}`).then((m) => {
                         return m.delete(10000).catch((reason) => {
-                            console.log(reason);
+                            console.log(`Cannot delete the message : ${reason}`);
                         });
                     });
                 }
@@ -654,7 +688,7 @@ const musicFunctions = {
                 else
                     return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
                         return m.delete(10000).catch((reason) => {
-                            console.log(reason);
+                            console.log(`Cannot delete the message : ${reason}`);
                         });
                     });
             }
@@ -665,7 +699,7 @@ const musicFunctions = {
                 else
                     return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m) => {
                         return m.delete(10000).catch((reason) => {
-                            console.log(reason);
+                            console.log(`Cannot delete the message : ${reason}`);
                         });
                     });
             }
@@ -704,7 +738,7 @@ const musicFunctions = {
                 if (reason === 'Stream is not generating quickly enough.')
                     console.log('Song ended.');
                 else
-                    console.log(reason);
+                    console.log(`Cannot delete the message : ${reason}`);
                 serverQueue.songs.shift();
                 musicFunctions.playMusic(guild, serverQueue.songs[0], queueList);
             }
@@ -712,7 +746,7 @@ const musicFunctions = {
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
         serverQueue.textChannel.send(`🎶 Start playing: **${song.title}**`).then((m) => {
             return m.delete(10000).catch((reason) => {
-                console.log(reason);
+                console.log(`Cannot delete the message : ${reason}`);
             });
         });
     },
