@@ -1,6 +1,5 @@
 import { Message, RichEmbed, VoiceChannel } from "discord.js"
 import * as ytdl from "ytdl-core"
-import { type } from "os"
 var YouTube = require("simple-youtube-api")
 export interface musicClient {
     google_api_key: string
@@ -30,7 +29,12 @@ export class musicClient {
      * @param {string} YouTubeApiKey The YouTube Data Api Key v3 to use.
      * @param {ClientOptions} [options] The music client options avalible to configure.
      */
-    public constructor(YouTubeApiKey: string, options: ClientOptions = {}) {
+    public constructor(YouTubeApiKey: string, options: ClientOptions = { 
+        earProtections: true,
+        loop: false,
+        songChooseTimeout: 10,
+        volume: 30
+    }) {
         if (typeof YouTubeApiKey !== "string") throw new Error("The YouTube Api Key provided is not a string.")
         this.google_api_key = YouTubeApiKey
         this.youtube = new YouTube(this.google_api_key)
