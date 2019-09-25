@@ -15,7 +15,7 @@ Please provide as detail as possible or else we will not understand each other c
 - Please use eslint to keep the code nice and clean.
 
 **Did you fix whitespace, format code, or make a purely cosmetic patch?**  
-If yes, then we are sorry. Code updates not relating to functions, performances or stability will generally not being accepted.
+If yes, then we are sorry. Code updates not related to functions, performances or stability will generally not being accepted.
 
 **Did you found something too complicated to understand ?**  
 - Open a new GitHub issue by using the question issue template.
