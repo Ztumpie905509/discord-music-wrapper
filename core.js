@@ -574,12 +574,13 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.paused = true;
             return msg.channel.send("The song playback has been stopped.");
         }
-        else 
+        else {
             return msg.channel.send("The song playback is already stopped.");
+        }
     }
     /**
      * Resumes the music playback.
-     * @param msg The mexssage object that triggers the command.
+     * @param msg The message object that triggers the command.
      */
     resume(msg) {
         const queue = this.queueList;
@@ -588,8 +589,9 @@ Please provide a value to select one of the search results ranging from 1-10.
             serverQueue.paused = false;
             return msg.channel.send("The song playback has been resumed.");
         }
-        else 
+        else {
             return msg.channel.send("The song playback is not stopped.");
+        }
     }
 }
 exports.musicClient = musicClient;
