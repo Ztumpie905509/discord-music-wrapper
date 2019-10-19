@@ -675,7 +675,6 @@ const musicFunctions = {
         }
         const dispatcher = serverQueue.connection.playStream(ytdl(song.url, {
             filter: "audioonly",
-            highWaterMark: 1024 * 512,
             quality: "highestaudio"
         })).on('end', (reason) => {
             if (serverQueue.loop === true) {
