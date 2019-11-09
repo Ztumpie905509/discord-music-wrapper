@@ -336,6 +336,11 @@ Please provide a value to select one of the search results ranging from 1-10.
      * // 1. National Anthem of USSR
      */
     public remove(msg: Message, queueIndex: number) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         if (typeof queueIndex !== "number") return console.log("The query provided is not a number.")
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
@@ -377,6 +382,11 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param msg The message object that triggers the command. 
      */
     public repeat(msg) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         const serverQueue = this.queueList.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => {
             return m.delete(10000).catch((reason) => {
@@ -414,6 +424,11 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param msg The message object that triggers the command. 
      */
     public loop(msg: Message) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
@@ -450,6 +465,11 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param msg The message object that triggers the command.
      */
     public shuffle(msg) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m) => {
@@ -490,6 +510,11 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param {number} volume A number to change the volume based on 100.
      */
     public volume(msg: Message, volume: number = -1) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         if (typeof volume !== "number") return msg.channel.send("The volume provided is not a number").then((m: Message) => {
             return m.delete(10000).catch((reason) => {
                 console.log(`Attempting to delete a deleted message (Which is impossible)`)
@@ -497,11 +522,6 @@ Please provide a value to select one of the search results ranging from 1-10.
         })
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
-            return m.delete(10000).catch((reason) => {
-                console.log(`Attempting to delete a deleted message (Which is impossible)`)
-            })
-        })
         if (!serverQueue) return msg.channel.send('There is nothing playing.').then((m: Message) => {
             return m.delete(10000).catch((reason) => {
                 console.log(`Attempting to delete a deleted message (Which is impossible)`)
@@ -531,10 +551,16 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param msg The message object that triggers the command.
      */
     public pause(msg: Message) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (serverQueue.paused === false) {
-            serverQueue.paused = true
+        if (serverQueue.playing === true) {
+            serverQueue.playing = false
+            serverQueue.connection.dispatcher.pause()
             return msg.channel.send("The song playback has been stopped.")
         } else {
             return msg.channel.send("The song playback is already stopped.")
@@ -545,10 +571,16 @@ Please provide a value to select one of the search results ranging from 1-10.
      * @param msg The message object that triggers the command.
      */
     public resume(msg: Message) {
+        if (!msg.member.voiceChannel) return msg.channel.send('You are not in a voice channel!').then((m: Message) => {
+            return m.delete(10000).catch((reason) => {
+                console.log(`Attempting to delete a deleted message (Which is impossible)`)
+            })
+        })
         const queue = this.queueList
         const serverQueue = queue.get(msg.guild.id);
-        if (serverQueue.paused === true) {
-            serverQueue.paused = false
+        if (serverQueue.playing === false) {
+            serverQueue.playing = true
+            serverQueue.connection.dispatcher.resume();
             return msg.channel.send("The song playback has been resumed.")
         } else {
             return msg.channel.send("The song playback is not stopped.")
@@ -619,8 +651,8 @@ const musicFunctions = {
             var queueConstruct = {
                 connection: null,
                 loop: loopQueue,
-                paused: true,
                 repeat: false,
+                playing: true,
                 songs: [],
                 textChannel: msg.channel,
                 voiceChannel,
@@ -646,7 +678,7 @@ const musicFunctions = {
             if (top) {
                 serverQueue.songs.splice(1, 0, song)
                 if (playlist) return undefined;
-                else return msg.channel.send(`✅ **${song.title}** has been added to the queue!`).then((m: Message) => {
+                else return msg.channel.send(`✅ **${song.title}** has been added to the top of the queue!`).then((m: Message) => {
                     return m.delete(10000).catch((reason) => {
                         console.log(`Attempting to delete a deleted message (Which is impossible)`)
                     })

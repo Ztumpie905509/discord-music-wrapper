@@ -121,10 +121,10 @@ export declare class musicClient {
      * Pause the music playback.
      * @param msg The message object that triggers the command.
      */
-    pause(msg: Message): Promise<Message | Message[]>;
+    pause(msg: Message): Promise<Message | Message[]> | Promise<void | Message>;
     /**
      * Resumes the music playback.
      * @param msg The message object that triggers the command.
      */
-    resume(msg: Message): Promise<Message | Message[]>;
+    resume(msg: Message): Promise<Message | Message[]> | Promise<void | Message>;
 }
