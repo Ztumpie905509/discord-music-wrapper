@@ -36,8 +36,8 @@ export class musicClient {
         volume: 30
     }) {
         if (typeof YouTubeApiKey !== "string") throw new Error("The YouTube Api Key provided is not a string.")
-        this.google_api_key = YouTubeApiKey
-        this.youtube = new YouTube(this.google_api_key)
+        this.google_api_key = YouTubeApiKey;
+        this.youtube = new YouTube(this.google_api_key);
         this.queueList = new Map()
         this.settings = {}
         if (options.songChooseTimeout) this.settings.songChooseTimeout = options.songChooseTimeout * 1000
