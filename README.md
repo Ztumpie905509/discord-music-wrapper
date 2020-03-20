@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/discord-music-wrapper.svg)](https://nodei.co/npm/discord-music-wrapper/)
 
-_**This package is currently under heavy development.**_
+_**This package will not be updated unless anyone encounter any problem**_
 If you encountered any bugs or have some feature requests/questions, please open a new issue and describe it briefly.  
 
 This package can help you with playing music in a discord.js bot.
